@@ -175,7 +175,7 @@ int sign(int x) {
  *   Rating: 2
  */
 int getByte(int x, int n) {
-  return 2;
+  return (x & (0xFF << (n << 3))) >> (n << 3);
 }
 // Rating: 3
 /* 
