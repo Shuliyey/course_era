@@ -198,7 +198,7 @@ int logicalShift(int x, int n) {
  *   Rating: 3
  */
 int addOK(int x, int y) {
-  return 2;
+  return ((x >> 31) ^ (y >> 31)) | !(((x+y) >> 31) ^ (x >> 31)) ;
 }
 // Rating: 4
 /* 
@@ -209,7 +209,7 @@ int addOK(int x, int y) {
  *   Rating: 4 
  */
 int bang(int x) {
-  return 2;
+  return (x >> 31) | ((~x + 1) >> 31);
 }
 // Extra Credit: Rating: 3
 /* 
@@ -220,7 +220,7 @@ int bang(int x) {
  *   Rating: 3
  */
 int conditional(int x, int y, int z) {
-  return 2;
+  return ((~(!!x)+1) & y) + ((~(!x)+1) & z);
 }
 // Extra Credit: Rating: 4
 /*
