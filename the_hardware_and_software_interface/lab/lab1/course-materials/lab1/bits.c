@@ -130,7 +130,7 @@ int bitAnd(int x, int y) {
  *   Rating: 1
  */
 int bitXor(int x, int y) {
-  return (~(~x & ~y)) && (~(x & y)) ;
+  return (~(~x & ~y)) & (~(x & y));
 }
 /* 
  * thirdBits - return word with every third bit (starting from the LSB) set to 1
@@ -140,7 +140,7 @@ int bitXor(int x, int y) {
  *   Rating: 1
  */
 int thirdBits(void) {
-  return 0b00100100100100100100100100100100;
+  return (((((0x49 << 9) + 0x49) << 9) + 0x49) << 6) + 9;
 }
 // Rating: 2
 /* 
@@ -153,7 +153,7 @@ int thirdBits(void) {
  *   Rating: 2
  */
 int fitsBits(int x, int n) {
-  return !(0 ^ x >> (n-1)) | !((0xFFFFFFFF >> n) ^ (x >> n));
+  return !(0 ^ (x >> (n+(~0)))) | !(((~0) >> (n + (~0))) ^ (x >> (n + (~0))));
 }
 /* 
  * sign - return 1 if positive, 0 if zero, and -1 if negative
@@ -175,7 +175,7 @@ int sign(int x) {
  *   Rating: 2
  */
 int getByte(int x, int n) {
-  return (x & (0xFF << (n << 3))) >> (n << 3);
+  return ((x >> (n << 3)) & 0xFF);
 }
 // Rating: 3
 /* 
@@ -187,7 +187,7 @@ int getByte(int x, int n) {
  *   Rating: 3 
  */
 int logicalShift(int x, int n) {
-  return x >> n;
+  return (x >> n) ^ (((x >> 31) << (32 + (~n))) << 1);
 }
 /* 
  * addOK - Determine if can compute x+y without overflow
@@ -198,7 +198,7 @@ int logicalShift(int x, int n) {
  *   Rating: 3
  */
 int addOK(int x, int y) {
-  return ((x >> 31) ^ (y >> 31)) | !(((x+y) >> 31) ^ (x >> 31)) ;
+  return !!((x >> 31) ^ (y >> 31)) | !(((x+y) >> 31) ^ (x >> 31)) ;
 }
 // Rating: 4
 /* 
@@ -209,7 +209,7 @@ int addOK(int x, int y) {
  *   Rating: 4 
  */
 int bang(int x) {
-  return (x >> 31) | ((~x + 1) >> 31);
+  return ((x >> 31) | ((~x + 1) >> 31)) + 1;
 }
 // Extra Credit: Rating: 3
 /* 
@@ -232,5 +232,5 @@ int conditional(int x, int y, int z) {
  *   Rating: 4
  */
 int isPower2(int x) {
-  return !(0 ^ (x & (x-1)));
+  return !!(x ^ 0) & !(x >> 31) & !(0 ^ (x & (x+(~0))));
 }
